@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF_8" />
+        <title>CGSG top</title>
+        <link rel="stylesheet" href="css/styles.css" />
+        <!-- icon in panel -->
+        <link rel="shortcut icon" href="../resources/me.png" type="image/png" />
+    </head>
+
+    <body>
+        <div><h1 style="color: blueviolet">AN2 renderer 0.0.1</h1></div>
+        <script type="module">
+            import * as rnd from "./js/render system/render.js";
+
+            window.addEventListener("load", () => {
+                /** @type {render} */
+                let render = new rnd.Render();
+                render.start();
+            });
+        </script>
+        <div class="fps" id="fps window">Some text here, for sure</div>
+
+        <canvas id="canvas" width="1600" height="1600"></canvas>
+
+        <!-- <input
+            type="range"
+            step="0.2"
+            min="1"
+            max="10"
+            value="1"
+            class="slider"
+            id="scaleSlider"
+        />
+
+        <img src="resources/me.png" />
+        <div id="1">Some text here, for sure</div> -->
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF_8" />
+        <title>CGSG top</title>
+        <link rel="stylesheet" href="styles.css" />
+        <!-- icon in panel -->
+        <link rel="shortcut icon" href="resources/me.png" type="image/png" />
+    </head>
+
+    <body>
+        <h1>First header</h1>
+        <script type="module">
+            import * as lib from "./lib.js";
+
+            window.addEventListener("load", () => {
+                lib.initGL();
+            });
+        </script>
+
+        <canvas id="an2Canvas" width="1600" height="1600"></canvas>
+
+        <!-- <input
+            type="range"
+            step="0.2"
+            min="1"
+            max="10"
+            value="1"
+            class="slider"
+            id="scaleSlider"
+        />
+
+        <img src="resources/me.png" />
+        <div id="1">Some text here, for sure</div> -->
+    </body>
+</html>

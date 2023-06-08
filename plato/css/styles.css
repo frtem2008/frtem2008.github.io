@@ -1,0 +1,53 @@
+body {
+    background-color: black;
+}
+
+.fps {
+    color: white;
+}
+
+/* Main html part - background*/
+html {
+    background: url(./res/Images/image.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+/* Average text */
+.text {
+    -webkit-text-fill-color: rgb(255, 255, 255);
+}
+
+/* Error canvas */
+.error {
+    background: url(./res/Images/Error.png);
+}
+
+.head {
+    text-align: center;
+    border: 3px solid rgb(255, 0, 0);
+    -webkit-text-fill-color: rgb(255, 255, 255);
+}
+
+.inner {
+    width: 100px;
+    border: 1px solid rgb(55, 119, 59);
+    -webkit-text-fill-color: rgb(255, 255, 255);
+}
+
+.filler {
+    -webkit-text-fill-color: rgb(192, 0, 0); 
+}
+
+.figure {
+    width: 256px;
+    height: 256px;
+    /* width: 889px;
+    height: 500px; */
+    border: 3px solid rgb(158, 0, 0);
+    /* background: url(./res/GIFs/anime.gif) no-repeat; */
+}
+
+
