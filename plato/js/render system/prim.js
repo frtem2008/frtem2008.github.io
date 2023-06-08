@@ -1,4 +1,4 @@
-import { vec3 } from "../math/mth.js";
+import { Camera, vec3 } from "../math/mth.js";
 import { mat4 } from "../math/mth.js";
 
 class Vertex {
@@ -29,7 +29,11 @@ export class Prim {
             gl.bindVertexArray(this.vA);
 
             gl.bindBuffer(gl.ARRAY_BUFFER, this.vBufId);
-            gl.bufferData(gl.ARRAY_BUFFER, V.length * vSize * 4, gl.STATIC_DRAW);
+            gl.bufferData(
+                gl.ARRAY_BUFFER,
+                V.length * vSize * 4,
+                gl.STATIC_DRAW
+            );
             gl.bufferSubData(gl.ARRAY_BUFFER, 0, V);
 
             const posLoc = gl.getAttribLocation(prog, "in_pos");
@@ -37,16 +41,16 @@ export class Prim {
             const normLoc = gl.getAttribLocation(prog, "in_n");
             const colLoc = gl.getAttribLocation(prog, "in_col");
 
-            gl.vertexAttribPointer(posLoc, 4, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(posLoc, 3, gl.FLOAT, false, 0, 0);
             gl.enableVertexAttribArray(posLoc);
             console.log(posLoc);
-            gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 16);
+            gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 12);
             gl.enableVertexAttribArray(texLoc);
             console.log(texLoc);
-            gl.vertexAttribPointer(normLoc, 3, gl.FLOAT, false, 0, 24);
+            gl.vertexAttribPointer(normLoc, 3, gl.FLOAT, false, 0, 20);
             gl.enableVertexAttribArray(normLoc);
             console.log(normLoc);
-            gl.vertexAttribPointer(colLoc, 4, gl.FLOAT, false, 0, 36);
+            gl.vertexAttribPointer(colLoc, 4, gl.FLOAT, false, 0, 32);
             gl.enableVertexAttribArray(colLoc);
             console.log(colLoc);
             gl.bindVertexArray(null);
@@ -55,7 +59,11 @@ export class Prim {
         if (I != undefined && numOfI != 0) {
             this.iBufId = gl.createBuffer();
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.iBufId);
-            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, I.length * 4, gl.STATIC_DRAW);
+            gl.bufferData(
+                gl.ELEMENT_ARRAY_BUFFER,
+                I.length * 4,
+                gl.STATIC_DRAW
+            );
             gl.bufferSubData(gl.ELEMENT_ARRAY_BUFFER, 0, I);
             this.numOfElements = numOfI;
             gl.bindBuffer(null);
@@ -67,10 +75,20 @@ export class Prim {
 
     draw(world) {
         let modelViewLoc = gl.getUniformLocation(prog, "ModelViewP");
-        let modelView = new mat4().view(new vec3(1.4, -2, 0.6), new vec3(0, 0, 0), new vec3(0, 1, 0));
+        camera.set(
+            new vec3(-1.4, -2, 5.6),
+            new vec3(0, -2, 0),
+            new vec3(0, 1, 0)
+        );
+        let modelView = camera.matrView;
         let size = 0.05;
-        modelView = modelView.frustum(-size, size, -size, size, 0.1, 3000).rotateV(this.angle++, new vec3(1, 1, 1));
-        gl.uniformMatrix4fv(modelViewLoc, false, new Float32Array(modelView.toArray()));
+        modelView = modelView.rotateV(this.angle++, new vec3(1, 1, 1));
+        gl.cullFace(gl.BACK);
+        gl.uniformMatrix4fv(
+            modelViewLoc,
+            false,
+            new Float32Array(modelView.toArray())
+        );
 
         if (this.vBufId != 0) {
             gl.bindBuffer(gl.ARRAY_BUFFER, this.vBufId);
@@ -79,7 +97,12 @@ export class Prim {
 
         if (this.iBufId != 0) {
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.iBufId);
-            gl.drawElements(gl.TRIANGLES, this.numOfElements, gl.UNSIGNED_SHORT, 0);
+            gl.drawElements(
+                gl.TRIANGLES,
+                this.numOfElements,
+                gl.UNSIGNED_SHORT,
+                0
+            );
         } else {
             gl.drawArrays(this.type, 0, this.numOfElements);
         }
