@@ -8,10 +8,6 @@ export function rd2(r) {
 
 export class vec3 {
     constructor(x, y = undefined, z = undefined) {
-        console.log("X: " + x);
-        console.log("Y: " + y);
-        console.log("Z: " + z);
-
         if (x == undefined) {
             this.x = this.y = this.z = 0;
         } else if (typeof x == "object") {

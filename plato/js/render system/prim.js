@@ -70,7 +70,6 @@ export class Prim {
         let modelView = new mat4().view(new vec3(1.4, -2, 0.6), new vec3(0, 0, 0), new vec3(0, 1, 0));
         let size = 0.05;
         modelView = modelView.frustum(-size, size, -size, size, 0.1, 3000).rotateV(this.angle++, new vec3(1, 1, 1));
-        console.log(modelView);
         gl.uniformMatrix4fv(modelViewLoc, false, new Float32Array(modelView.toArray()));
 
         if (this.vBufId != 0) {
