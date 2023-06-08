@@ -16,7 +16,7 @@ export class Render {
         // todo set camera params
         this.camera = new Camera();
         this.prog = undefined;
-        res.createProgram(this, gl, "../shaders/vert.glsl", "../shaders/frag.glsl");
+        res.createProgram(this, gl, "./shaders/vert.glsl", "./shaders/frag.glsl");
 
         this.loaded = false;
         window.addEventListener("Shader program loaded", () => {
