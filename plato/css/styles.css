@@ -1,14 +1,10 @@
-body {
-    background-color: black;
-}
-
 .fps {
     color: white;
 }
 
 /* Main html part - background*/
 html {
-    background: url(./res/Images/image.jpg) no-repeat center center fixed; 
+    background: url(../resources/background.png) repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -22,7 +18,7 @@ html {
 
 /* Error canvas */
 .error {
-    background: url(./res/Images/Error.png);
+    background: url(../resources/me.png);
 }
 
 .head {
