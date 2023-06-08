@@ -9,5 +9,5 @@ in vec3 n;
 in vec4 c;
 
 void main() {
-    o_color = vec4(pos.x, pos.x, pos.x, 0.4);
+    o_color = vec4(pos.x, pos.x, pos.x, 1);
 }

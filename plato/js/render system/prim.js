@@ -66,7 +66,6 @@ export class Prim {
             );
             gl.bufferSubData(gl.ELEMENT_ARRAY_BUFFER, 0, I);
             this.numOfElements = numOfI;
-            gl.bindBuffer(null);
         } else {
             this.numOfElements = numOfV;
         }
@@ -75,14 +74,14 @@ export class Prim {
 
     draw(world) {
         let modelViewLoc = gl.getUniformLocation(prog, "ModelViewP");
-        camera.set(
-            new vec3(-1.4, -2, 5.6),
-            new vec3(0, -2, 0),
-            new vec3(0, 1, 0)
+        camera.set(new vec3(10), new vec3(0, 0, 0), new vec3(0, 1, 0));
+        camera.setProj(0.1, 0.1, 1080);
+        camera.setSize(1600, 1600);
+        let modelView = camera.matrVP.rotateV(
+            (this.angle += 1),
+            new vec3(1, 1, 1)
         );
-        let modelView = camera.matrView;
         let size = 0.05;
-        modelView = modelView.rotateV(this.angle++, new vec3(1, 1, 1));
         gl.cullFace(gl.BACK);
         gl.uniformMatrix4fv(
             modelViewLoc,
