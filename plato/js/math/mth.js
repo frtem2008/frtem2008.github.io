@@ -174,10 +174,7 @@ export class mat4 {
         let ra = d2r(a);
         let si = Math.sin(ra);
         let co = Math.cos(ra);
-
-        console.log("Ra: " + ra);
-        console.log("Si: " + si);
-        console.log("Co: " + co);
+                                 
         V = V.normalize();
         let mat = new mat4([
             [co + V.x * V.x * (1 - co), V.x * V.y * (1 - co) + V.z * si, V.x * V.z * (1 - co) - V.y * si, 0],
@@ -185,7 +182,6 @@ export class mat4 {
             [V.z * V.x * (1 - co) + V.y * si, V.z * V.y * (1 - co) - V.x * si, co + V.z * V.z * (1 - co), 0],
             [0, 0, 0, 1],
         ]);
-        console.log(mat);
         return mat;
     }
 
