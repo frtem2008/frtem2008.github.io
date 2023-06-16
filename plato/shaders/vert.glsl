@@ -15,7 +15,7 @@ out vec3 n;
 out vec4 c;
 
 void main() {
-    gl_Position = vec4(in_pos * 0.28, 1) * ModelViewP;
+    gl_Position = vec4(in_pos, 1) * ModelViewP;
     pos = in_pos;
     tc = in_tex;
     n = in_n;

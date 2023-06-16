@@ -1,17 +1,8 @@
-import { Camera, vec3 } from "../math/mth.js";
-import { mat4 } from "../math/mth.js";
-
-class Vertex {
-    constructor() {
-        this.P = []; // Position
-        this.T = []; // Texture coordinates
-        this.N = []; // Normals
-        this.C = []; // Color
-    }
-}
+import { vec3 } from "../math/vec3.js";
+import { mat4 } from "../math/mat4.js";
 
 export class Prim {
-    constructor(V, numOfV, I, numOfI, type, texArray) {
+    constructor(gl, prog, scale, V, numOfV, I, numOfI, type, texArray) {
         this.V = V;
         this.vA = 0; // OpenGL vertex array Id
         this.vBufId = 0; // OpenGL vertex buffer Id
@@ -20,6 +11,7 @@ export class Prim {
         this.tex = texArray;
         this.type = type;
         this.trans = new mat4(); // Additional transformation matrix
+        this.scale = scale;
 
         if (V != undefined && numOfV != 0) {
             this.vBufId = gl.createBuffer();
@@ -72,17 +64,64 @@ export class Prim {
         this.angle = 0;
     }
 
-    draw(world) {
-        let modelViewLoc = gl.getUniformLocation(prog, "ModelViewP");
-        camera.set(new vec3(10), new vec3(0, 0, 0), new vec3(0, 1, 0));
-        camera.setProj(0.1, 0.1, 1080);
-        camera.setSize(1600, 1600);
-        let modelView = camera.matrVP.rotateV(
-            (this.angle += 1),
-            new vec3(1, 1, 1)
+    loadFromText(gl, prog, objText) {
+        console.log("Obj text: " + objText);
+        let fileStr = objText.split("\n");
+        let V = [],
+            Ind = [];
+
+        /* Load primitive data */
+        fileStr.forEach((item, index, array) => {
+            let arr = item.split(" ");
+
+            if (item[0] == "v" && item[1] == " ") {
+                V.push(+arr[1]);
+                V.push(+arr[2]);
+                V.push(+arr[3]);
+            } else if (item[0] == "f" && item[1] == " ") {
+                let c0 = 0,
+                    c1 = 0,
+                    c;
+
+                for (let cnt = 1; cnt <= 3; cnt++) {
+                    c = parseInt(arr[cnt]) - 1;
+                    if (cnt == 1) {
+                        c0 = c;
+                    } else if (cnt == 2) {
+                        c1 = c;
+                    } else {
+                        /* Triangle completed */
+                        Ind.push(c0);
+                        Ind.push(c1);
+                        Ind.push(c);
+                        c1 = c;
+                    }
+                }
+            }
+        });
+
+        return new Prim(
+            gl,
+            prog,
+            0.1,
+            new Float32Array(V),
+            V.length,
+            new Uint16Array(Ind),
+            Ind.length,
+            gl.TRIANGLE_STRIP,
+            [-1]
         );
-        let size = 0.05;
-        gl.cullFace(gl.BACK);
+    }
+
+    draw(gl, prog, camera) {
+        let modelViewLoc = gl.getUniformLocation(prog, "ModelViewP");
+        camera.setSize(400, 400);
+        camera.set(vec3(1, 2, 8), vec3(0, 0, 0), vec3(0, 1, 0));
+
+        let modelView = camera.matrVP
+            .rotate((this.angle -= 0.01), vec3(0, 1, 0))
+            .scale(this.scale, this.scale, this.scale);
+
         gl.uniformMatrix4fv(
             modelViewLoc,
             false,

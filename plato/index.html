@@ -29,14 +29,14 @@
             import * as rnd from "./js/render system/render.js";
 
             window.addEventListener("load", () => {
-                /** @type {render} */
-                let render = new rnd.Render();
-                render.start();
+                new rnd.Render("cube canvas", "cube").start();
+                new rnd.Render("obj canvas", "obj").start();
             });
         </script>
         <div class="fps" id="fps window">Some text here, for sure</div>
 
-        <canvas id="canvas" width="1600" height="1600"></canvas>
+        <canvas id="cube canvas" width="400" height="400"></canvas>
+        <canvas id="obj canvas" width="400" height="400"></canvas>
         <img src="resources/me.png" />
         <div id="1">Some text here, for sure</div>
     </body>

@@ -22,7 +22,7 @@ function loadShader(gl, type, source) {
 
     return shader;
 }
-export async function createProgram(render, gl, vsUrl, fsUrl) {
+export async function createProgram(render, gl, canvasId, vsUrl, fsUrl) {
     let vsPrm = fetchResource(vsUrl);
     let fsPrm = fetchResource(fsUrl);
 
@@ -49,7 +49,7 @@ export async function createProgram(render, gl, vsUrl, fsUrl) {
             }
 
             render.prog = prog;
-            const event = new Event("Shader program loaded");
+            const event = new Event("Shader program loaded" + canvasId);
             window.dispatchEvent(event);
             console.log("Event dispatched");
         })
