@@ -25,14 +25,7 @@
         <p><a href="../index.html">Назад</a></p>
         <p>Какие-то баги со светом, я без понятия</p>
 
-        <script type="module">
-            import * as rnd from "./js/render system/render.js";
-
-            window.addEventListener("load", () => {
-                new rnd.Render("cube canvas", "cube").start();
-                new rnd.Render("obj canvas", "obj").start();
-            });
-        </script>
+        <script type="module" src="./dist/bundle.js"></script>
         <div class="fps" id="fps window">Some text here, for sure</div>
 
         <canvas id="cube canvas" width="400" height="400"></canvas>
